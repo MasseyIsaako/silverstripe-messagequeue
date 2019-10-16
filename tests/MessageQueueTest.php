@@ -6,7 +6,7 @@ class MessageQueueTest extends SapphireTest
     protected $extraDataObjects = array(
         'MessageQueueTest_DataObject'
     );
-    
+
     /**
      * @TODO
      * *** Test rule matching:
@@ -96,7 +96,7 @@ class MessageQueueTest extends SapphireTest
     {
         $old = MessageQueue::get_force_immediate_delivery();
         MessageQueue::set_force_immediate_delivery(false);
-        
+
         // set test-environment for message queue, store the current
         // testqueue message-queue to reset it after the test is done.
         $interfaces = MessageQueue::get_interfaces();
@@ -115,7 +115,7 @@ class MessageQueueTest extends SapphireTest
                 )
             )
         ));
-        
+
         $this->assertTrue($this->getQueueSizeSimpleDB("testqueue") == 0, "Queue is empty before we put anything in it");
 
         MessageQueue::send("testqueue", new MethodInvocationMessage("MessageQueueTest", "doStaticMethod", "p1", 2));
@@ -125,7 +125,7 @@ class MessageQueueTest extends SapphireTest
 
         // reset testqueue to the original state
         MessageQueue::set_all_interfaces($interfaces);
-    
+
         MessageQueue::set_force_immediate_delivery($old);
     }
 
@@ -255,7 +255,7 @@ class MessageQueueTest extends SapphireTest
 
         $this->assertTrue($this->getQueueSizeSimpleDB("testmainqueue") == 0, "Main queue is empty before we put anything in it");
         MessageQueue::send("testmainqueue", new MethodInvocationMessage("MessageQueueTest", "doStaticMethodWithError", "p1", 2));
-        
+
         $this->assertTrue($this->getQueueSizeSimpleDB("testmainqueue") == 1, "Main queue has an item after we add to it");
 
         // clear the queue, causing the message to execute and fail
@@ -467,7 +467,7 @@ class MessageQueueTest_DataObject extends DataObject implements TestOnly
     }
 }
 
-class MessageQueue_Object extends Object implements TestOnly
+class MessageQueue_Object extends SS_Object implements TestOnly
 {
     public $prop1 = null;
     public static $testP1 = null;
